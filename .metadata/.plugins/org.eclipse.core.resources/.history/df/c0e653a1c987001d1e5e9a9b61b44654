@@ -1,0 +1,14 @@
+digraph _logic_Accounts {
+rankdir=LR;
+node [shape = circle]; start;
+node [shape = octagon]; tooMany badDelete;
+node [shape = point]; _s_s;
+_s_s -> start;
+start -> badDelete [ label = "(1) deleteAccount\\noOfAccounts == 0 \\System . out . println ( \" BAD State!!! \" ) ; "];
+start -> tooMany [ label = "(2) addAccount\\noOfAccounts == 5 \\noOfAccounts ++ ; "];
+start -> start [ label = "(3) addAccount\\\\noOfAccounts ++ ; "];
+start -> start [ label = "(4) deleteAccount\\\\noOfAccounts -- ; "];
+tooMany -> tooMany [ label = "(1) addAccount\\\\noOfAccounts ++ ; System . out . println ( \" Too many accounts already \" ) ; "];
+tooMany -> tooMany [ label = "(2) deleteAccount\\noOfAccounts > 6 \\noOfAccounts -- ; "];
+tooMany -> start [ label = "(3) deleteAccount\\noOfAccounts == 6 \\noOfAccounts -- ; "];
+}

@@ -1,0 +1,14 @@
+digraph _logic_Transactions {
+rankdir=LR;
+node [shape = circle]; start;
+node [shape = octagon]; tooMany badDelete;
+node [shape = point]; _s_s;
+_s_s -> start;
+start -> badDelete [ label = "(1) deleteTransaction\\noOfTransactions == 0 \\System . out . println ( \" BAD State!!! \" ) ; "];
+start -> tooMany [ label = "(2) addTransaction\\noOfTransactions == 5 \\noOfTransactions ++ ; "];
+start -> start [ label = "(3) addTransaction\\\\noOfTransactions ++ ; "];
+start -> start [ label = "(4) deleteTransaction\\\\noOfTransactions -- ; "];
+tooMany -> tooMany [ label = "(1) addTransaction\\\\noOfTransactions ++ ; System . out . println ( \" Too many transactions already \" ) ; "];
+tooMany -> tooMany [ label = "(2) deleteTransaction\\noOfTransactions > 6 \\noOfTransactions -- ; "];
+tooMany -> start [ label = "(3) deleteTransaction\\noOfTransactions == 6 \\noOfTransactions -- ; "];
+}

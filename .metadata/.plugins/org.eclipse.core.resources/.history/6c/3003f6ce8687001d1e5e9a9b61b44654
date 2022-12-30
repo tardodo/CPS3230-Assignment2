@@ -1,0 +1,19 @@
+package main;
+
+public class Runner {
+
+	public static void main(String[] args) {
+		WebsiteAPI api = new WebsiteAPI();
+		
+		try {
+			api.uploadToAPI();
+//			api.deleteFromAPI();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	}
+
+}

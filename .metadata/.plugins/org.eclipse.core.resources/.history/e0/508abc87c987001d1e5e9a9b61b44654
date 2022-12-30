@@ -1,0 +1,42 @@
+package aspects;
+
+import main.Bank;
+import main.User;
+import main.Account;
+
+import larva.*;
+public aspect _asp_StudentBank1 {
+
+boolean initialized = false;
+
+after():(staticinitialization(*)){
+if (!initialized){
+	initialized = true;
+	_cls_StudentBank1.initialize();
+}
+}
+before ( User u1) : (call(* User.deleteAcount(..)) && target(u1) && !cflow(adviceexecution()) && !cflow(within(larva.*))  && !(within(larva.*))) {
+
+synchronized(_asp_StudentBank0.lock){
+User u;
+u =u1 ;
+
+_cls_StudentBank1 _cls_inst = _cls_StudentBank1._get_cls_StudentBank1_inst( u);
+_cls_inst.u1 = u1;
+_cls_inst._call(thisJoinPoint.getSignature().toString(), 6/*deleteAccount*/);
+_cls_inst._call_all_filtered(thisJoinPoint.getSignature().toString(), 6/*deleteAccount*/);
+}
+}
+before ( User u1) : (call(* User.addAccount(..)) && target(u1) && !cflow(adviceexecution()) && !cflow(within(larva.*))  && !(within(larva.*))) {
+
+synchronized(_asp_StudentBank0.lock){
+User u;
+u =u1 ;
+
+_cls_StudentBank1 _cls_inst = _cls_StudentBank1._get_cls_StudentBank1_inst( u);
+_cls_inst.u1 = u1;
+_cls_inst._call(thisJoinPoint.getSignature().toString(), 4/*addAccount*/);
+_cls_inst._call_all_filtered(thisJoinPoint.getSignature().toString(), 4/*addAccount*/);
+}
+}
+}

@@ -1,0 +1,63 @@
+package aspects;
+
+import main.WebsiteAPI;
+
+import larva.*;
+public aspect _asp_RuntimeVerification0 {
+
+public static Object lock = new Object();
+
+boolean initialized = false;
+
+after():(staticinitialization(*)){
+if (!initialized){
+	initialized = true;
+	_cls_RuntimeVerification0.initialize();
+}
+}
+before () : (call(* *.viewAlerts(..)) && !cflow(adviceexecution()) && !cflow(within(larva.*))  && !(within(larva.*))) {
+
+synchronized(_asp_RuntimeVerification0.lock){
+
+_cls_RuntimeVerification0 _cls_inst = _cls_RuntimeVerification0._get_cls_RuntimeVerification0_inst();
+_cls_inst._call(thisJoinPoint.getSignature().toString(), 64/*viewAlerts*/);
+_cls_inst._call_all_filtered(thisJoinPoint.getSignature().toString(), 64/*viewAlerts*/);
+}
+}
+before () : (call(* *.createAlert(..)) && !cflow(adviceexecution()) && !cflow(within(larva.*))  && !(within(larva.*))) {
+
+synchronized(_asp_RuntimeVerification0.lock){
+
+_cls_RuntimeVerification0 _cls_inst = _cls_RuntimeVerification0._get_cls_RuntimeVerification0_inst();
+_cls_inst._call(thisJoinPoint.getSignature().toString(), 66/*createAlert*/);
+_cls_inst._call_all_filtered(thisJoinPoint.getSignature().toString(), 66/*createAlert*/);
+}
+}
+before () : (call(* *.goodLogin(..)) && !cflow(adviceexecution()) && !cflow(within(larva.*))  && !(within(larva.*))) {
+
+synchronized(_asp_RuntimeVerification0.lock){
+
+_cls_RuntimeVerification0 _cls_inst = _cls_RuntimeVerification0._get_cls_RuntimeVerification0_inst();
+_cls_inst._call(thisJoinPoint.getSignature().toString(), 62/*goodLogin*/);
+_cls_inst._call_all_filtered(thisJoinPoint.getSignature().toString(), 62/*goodLogin*/);
+}
+}
+before () : (call(* *.deleteAlerts(..)) && !cflow(adviceexecution()) && !cflow(within(larva.*))  && !(within(larva.*))) {
+
+synchronized(_asp_RuntimeVerification0.lock){
+
+_cls_RuntimeVerification0 _cls_inst = _cls_RuntimeVerification0._get_cls_RuntimeVerification0_inst();
+_cls_inst._call(thisJoinPoint.getSignature().toString(), 68/*deleteAlert*/);
+_cls_inst._call_all_filtered(thisJoinPoint.getSignature().toString(), 68/*deleteAlert*/);
+}
+}
+before () : (call(* *.logout(..)) && !cflow(adviceexecution()) && !cflow(within(larva.*))  && !(within(larva.*))) {
+
+synchronized(_asp_RuntimeVerification0.lock){
+
+_cls_RuntimeVerification0 _cls_inst = _cls_RuntimeVerification0._get_cls_RuntimeVerification0_inst();
+_cls_inst._call(thisJoinPoint.getSignature().toString(), 70/*logout*/);
+_cls_inst._call_all_filtered(thisJoinPoint.getSignature().toString(), 70/*logout*/);
+}
+}
+}

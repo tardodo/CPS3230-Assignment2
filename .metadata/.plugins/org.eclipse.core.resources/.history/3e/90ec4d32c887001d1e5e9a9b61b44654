@@ -1,0 +1,115 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% The following property has 3 levels: it monitors that in the bank
+%% system there are no more than 5 users, it checks that for every
+%% user there are no more than 5 accounts, and finally that for each
+%% account there are no more than 5 transactions.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+IMPORTS{
+import main.Bank;
+import main.User;
+import main.Account;
+}
+
+GLOBAL{
+
+        VARIABLES{
+            int noOfUsers = 0;
+        }
+
+        EVENTS{
+            addUser() = {*.addUser()}
+            deleteUser() = {*.deleteUser()}
+        }   
+
+        PROPERTY Users{
+            STATES{
+                BAD{
+                    tooMany
+                    badDelete
+                }
+                STARTING{
+                    start
+                }
+            }
+
+            TRANSITIONS{
+                tooMany->tooMany [addUser\\noOfUsers++;System.out.println("Too many users already");]
+                tooMany->tooMany [deleteUser\noOfUsers > 6\noOfUsers--;]
+                tooMany->start [deleteUser\noOfUsers == 6\noOfUsers--;]
+                start->badDelete [deleteUser\noOfUsers == 0\System.out.println("BAD State!!!");]
+                start->tooMany [addUser\noOfUsers == 5\noOfUsers++;]
+                start->start [addUser\\noOfUsers++;]
+                start->start [deleteUser\\noOfUsers--;]
+            }
+        }
+    
+    FOREACH (User u)
+    {
+        VARIABLES{
+            int noOfAccounts = 0;
+        }
+
+        EVENTS{
+            addAccount() = {User u1.addAccount()} where { u = u1;} 
+            deleteAccount() = {User u1.deleteAcount()} where { u = u1;} 
+        }   
+
+        PROPERTY Accounts{
+            STATES{
+                BAD{
+                    tooMany
+                    badDelete
+                }
+                STARTING{
+                    start
+                }
+            }
+
+            TRANSITIONS{
+                tooMany->tooMany [addAccount\\noOfAccounts++;System.out.println("Too many accounts already");]
+                tooMany->tooMany [deleteAccount\noOfAccounts > 6\noOfAccounts--;]
+                tooMany->start [deleteAccount\noOfAccounts == 6\noOfAccounts--;]
+                start->badDelete [deleteAccount\noOfAccounts == 0\System.out.println("BAD State!!!");]
+                start->tooMany [addAccount\noOfAccounts == 5\noOfAccounts++;]
+                start->start [addAccount\\noOfAccounts++;]
+                start->start [deleteAccount\\noOfAccounts--;]
+            }
+        }
+        FOREACH (Account a)
+        {
+	        VARIABLES{
+	            int noOfTransactions = 0;
+	        }
+	
+	        EVENTS{
+	            addTransaction() = {Account a1.addTransaction()} where { a = a1; u = a.owner;} 
+	            deleteTransaction() = {Account a1.deleteTransaction()} where { a = a1; u = a.owner;} 
+	        }   
+	
+	        PROPERTY Transactions{
+	            STATES{
+	                BAD{
+	                    tooMany
+	                    badDelete
+	                }
+	                STARTING{
+	                    start
+	                }
+	            }
+	
+	            TRANSITIONS{
+	                tooMany->tooMany [addTransaction\\noOfTransactions++;System.out.println("Too many transactions already");]
+	                tooMany->tooMany [deleteTransaction\noOfTransactions > 6\noOfTransactions--;]
+	                tooMany->start [deleteTransaction\noOfTransactions == 6\noOfTransactions--;]
+	                start->badDelete [deleteTransaction\noOfTransactions == 0\System.out.println("BAD State!!!");]
+	                start->tooMany [addTransaction\noOfTransactions == 5\noOfTransactions++;]
+	                start->start [addTransaction\\noOfTransactions++;]
+	                start->start [deleteTransaction\\noOfTransactions--;]
+	            }
+	        }
+	    }
+    }
+}

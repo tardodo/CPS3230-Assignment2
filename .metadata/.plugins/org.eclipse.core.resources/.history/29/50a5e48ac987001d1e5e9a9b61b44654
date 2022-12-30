@@ -1,0 +1,14 @@
+digraph _logic_Users {
+rankdir=LR;
+node [shape = circle]; start;
+node [shape = octagon]; tooMany badDelete;
+node [shape = point]; _s_s;
+_s_s -> start;
+start -> badDelete [ label = "(1) deleteUser\\noOfUsers == 0 \\System . out . println ( \" BAD State!!! \" ) ; "];
+start -> tooMany [ label = "(2) addUser\\noOfUsers == 5 \\noOfUsers ++ ; "];
+start -> start [ label = "(3) addUser\\\\noOfUsers ++ ; "];
+start -> start [ label = "(4) deleteUser\\\\noOfUsers -- ; "];
+tooMany -> tooMany [ label = "(1) addUser\\\\noOfUsers ++ ; System . out . println ( \" Too many users already \" ) ; "];
+tooMany -> tooMany [ label = "(2) deleteUser\\noOfUsers > 6 \\noOfUsers -- ; "];
+tooMany -> start [ label = "(3) deleteUser\\noOfUsers == 6 \\noOfUsers -- ; "];
+}

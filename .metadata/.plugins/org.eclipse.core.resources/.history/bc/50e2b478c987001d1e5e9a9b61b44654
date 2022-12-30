@@ -1,0 +1,42 @@
+
+IMPORTS{
+import main.WebsiteAPI;
+}
+
+GLOBAL{
+
+        VARIABLES{
+            int numOfAlerts = 0;
+            
+        }
+
+        EVENTS{
+            goodLogin() = {*.goodLogin()}
+            viewAlerts() = {*.viewAlerts()}
+            createAlert() = {*.createAlert()}
+            deleteAlert() = {*.deleteAlerts()}
+            logout() = {*.logout()}
+        }   
+
+        PROPERTY User{
+            STATES{
+                BAD{
+                    tooMany
+                    badDelete
+                }
+                STARTING{
+                    start
+                }
+            }
+
+            TRANSITIONS{
+                tooMany->tooMany [addUser\\noOfUsers++;System.out.println("Too many users already");]
+                tooMany->tooMany [deleteUser\noOfUsers > 6\noOfUsers--;]
+                tooMany->start [deleteUser\noOfUsers == 6\noOfUsers--;]
+                start->badDelete [deleteUser\noOfUsers == 0\System.out.println("BAD State!!!");]
+                start->tooMany [addUser\noOfUsers == 5\noOfUsers++;]
+                start->start [addUser\\noOfUsers++;]
+                start->start [deleteUser\\noOfUsers--;]
+            }
+        }
+}

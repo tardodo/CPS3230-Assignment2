@@ -1,0 +1,144 @@
+package main;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class WebsiteAPI {
+	
+	public String currentLog;
+	public WebsiteAPI(){
+		currentLog = "";
+	}
+	
+	public void uploadToAPI() throws Exception{
+		Gson gson = new Gson();
+		TechAlert alert = new TechAlert();
+		String jsonProduct = gson.toJson(alert);
+		
+		URL url = new URL("https://api.marketalertum.com/Alert");
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setDoOutput(true);
+		
+		try(OutputStream os = con.getOutputStream()) {
+		    byte[] input = jsonProduct.getBytes("utf-8");
+		    os.write(input, 0, input.length);			
+		}
+		
+		int status = con.getResponseCode();
+		
+		System.out.println(status);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			content.append(inputLine);
+		}
+		in.close();
+		
+		con.disconnect();
+		
+		System.out.println(prettyPrint(content));
+	}
+		
+	public void deleteFromAPI() throws Exception{
+		
+		URL url = new URL("https://api.marketalertum.com/Alert?userId=c483fe67-d39d-429a-9afa-273d26d2fe35");
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("DELETE");
+		con.setRequestProperty("Content-Type", "application/json");
+		
+		
+		int status = con.getResponseCode();
+		
+		System.out.println(status);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			content.append(inputLine);
+		}
+		in.close();
+		
+		con.disconnect();
+		
+		System.out.println(prettyPrint(content));
+	}	
+	
+	public void getEventsLog() throws Exception{
+		
+		URL url = new URL("https://api.marketalertum.com/EventsLog/c483fe67-d39d-429a-9afa-273d26d2fe35");
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("Content-Type", "application/json");
+		
+		
+		int status = con.getResponseCode();
+		
+		System.out.println(status);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			content.append(inputLine);
+		}
+		in.close();
+		
+		con.disconnect();
+		
+	 	currentLog = prettyPrint(content);
+//		System.out.println(currentLog);
+	}
+	
+	private static String prettyPrint(StringBuffer jsonString) {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonElement je = JsonParser.parseString(jsonString.toString());
+		String prettyJson = gson.toJson(je);
+		
+	    return prettyJson;
+	}
+	
+	public JsonArray getEventType(){
+		int eventType;
+		JsonElement jelement = JsonParser.parseString(currentLog);
+	    JsonArray  eventList = jelement.getAsJsonArray();
+	    for(int i = 0; i < eventList.size(); i++){
+	    	JsonObject jObj = eventList.get(i).getAsJsonObject();
+	    	eventType = jObj.get("eventLogType").getAsInt();
+	    	
+	    	switch(eventType){
+	    		case 0: this.createAlert();break;
+	    		case 1: this.deleteAlerts();break;
+	    		case 5: this.goodLogin();break;
+	    		case 6: this.logout();break;
+	    		case 7: this.viewAlerts();break;
+	    		default: System.out.println("Invalid Event Log");break;
+	    	}
+	    }
+	    
+	    return eventList;
+	}	
+	
+	public void goodLogin(){}
+	public void viewAlerts(){}
+	public void createAlert(){}
+	public void deleteAlerts(){}
+	public void logout(){}
+	
+
+}

@@ -1,19 +1,19 @@
 digraph _logic_User {
 rankdir=LR;
-node [shape = circle]; normal start;
+node [shape = circle]; loggedIn loggedOut;
 node [shape = octagon]; overflow badDelete illegalCreate illegalDelete;
 node [shape = point]; _s_s;
-_s_s -> start;
-normal -> normal [ label = "(1) createAlert\\numOfAlerts < 5 \\numOfAlerts ++ ; "];
-normal -> normal [ label = "(2) deleteAlerts\\numOfAlerts > 0 \\numOfAlerts = 0 ; "];
-normal -> badDelete [ label = "(3) deleteAlerts\\numOfAlerts == 0 "];
-normal -> overflow [ label = "(4) createAlert\\numOfAlerts >= 5 \\numOfAlerts ++ ; "];
-normal -> normal [ label = "(5) viewAlerts"];
-normal -> start [ label = "(6) logout"];
-overflow -> normal [ label = "(1) deleteAlerts\\\\numOfAlerts = 0 ; "];
-start -> illegalCreate [ label = "(1) createAlert\\\\numOfAlerts ++ ; "];
-start -> illegalDelete [ label = "(2) deleteAlerts\\\\numOfAlerts = 0 ; "];
-start -> normal [ label = "(3) goodLogin"];
-illegalCreate -> illegalDelete [ label = "(1) deleteAlerts\\\\numOfAlerts = 0 ; "];
-illegalDelete -> normal [ label = "(1) goodLogin"];
+_s_s -> loggedOut;
+overflow -> loggedIn [ label = "(1) deleteAlerts\\\\numOfAlerts = 0 ; System . out . println ( \" Recovered to normal state \" ) ; "];
+loggedIn -> loggedIn [ label = "(1) createAlert\\numOfAlerts < 5 \\numOfAlerts ++ ; "];
+loggedIn -> loggedIn [ label = "(2) deleteAlerts\\numOfAlerts > 0 \\numOfAlerts = 0 ; "];
+loggedIn -> badDelete [ label = "(3) deleteAlerts\\numOfAlerts == 0 \\System . out . println ( \" Nothing to Delete \" ) ; "];
+loggedIn -> overflow [ label = "(4) createAlert\\numOfAlerts >= 5 \\numOfAlerts ++ ; System . out . println ( \" Overflow of Alerts \" ) ; "];
+loggedIn -> loggedIn [ label = "(5) viewAlerts"];
+loggedIn -> loggedOut [ label = "(6) logout"];
+loggedOut -> illegalCreate [ label = "(1) createAlert\\\\numOfAlerts ++ ; System . out . println ( \" Cannot create Alerts while logged out \" ) ; "];
+loggedOut -> illegalDelete [ label = "(2) deleteAlerts\\\\numOfAlerts = 0 ; System . out . println ( \" Cannot delete alerts while logged out \" ) ; "];
+loggedOut -> loggedIn [ label = "(3) goodLogin"];
+illegalCreate -> illegalDelete [ label = "(1) deleteAlerts\\\\numOfAlerts = 0 ; System . out . println ( \" Cannot delete alerts while logged out \" ) ; "];
+illegalDelete -> loggedIn [ label = "(1) goodLogin\\\\System . out . println ( \" Recovered to normal state \" ) ; "];
 }

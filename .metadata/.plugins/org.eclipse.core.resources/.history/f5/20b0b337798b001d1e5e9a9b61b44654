@@ -1,0 +1,55 @@
+
+IMPORTS{
+import main.WebsiteAPI;
+}
+
+GLOBAL{
+
+        VARIABLES{
+            int numOfAlerts = 0;
+            
+        }
+
+        EVENTS{
+            goodLogin() = {*.goodLogin()}
+            viewAlerts() = {*.viewAlerts()}
+            createAlert() = {*.createAlert()}
+            deleteAlerts() = {*.deleteAlerts()}
+            logout() = {*.logout()}
+        }   
+
+        PROPERTY User{
+            STATES{
+            	
+                BAD{
+                    overflow
+                    badDelete
+                    illegalCreate
+                    illegalDelete
+                }
+                NORMAL{
+                	normal
+                }
+                STARTING{
+                    start
+                }
+            }
+
+            TRANSITIONS{
+       
+            	normal->normal [createAlert\numOfAlerts < 5\numOfAlerts++;]
+            	normal->normal [deleteAlerts\numOfAlerts > 0\numOfAlerts=0;]
+            	normal->badDelete [deleteAlerts\numOfAlerts == 0\]
+            	normal->overflow [createAlert\numOfAlerts >= 5\numOfAlerts++;]
+            	overflow->normal [deleteAlerts\\numOfAlerts = 0;]
+            	start->illegalCreate [createAlert\\numOfAlerts++;]
+            	start->illegalDelete [deleteAlerts\\numOfAlerts = 0;]
+            	illegalCreate->illegalDelete [deleteAlerts\\numOfAlerts=0;]
+            	illegalDelete->normal [goodLogin\\]
+            	start->normal [goodLogin\\]
+            	normal->normal [viewAlerts\\]
+            	normal->start [logout\\]
+
+            }
+        }
+}

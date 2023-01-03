@@ -1,29 +1,23 @@
-[User]AUTOMATON::> User() STATE::>start
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.goodLogin() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.viewAlerts() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.createAlert() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.createAlert() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.createAlert() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.createAlert() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.createAlert() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.createAlert() TO STATE::> !!!SYSTEM REACHED BAD STATE!!! overflow 
+[User]AUTOMATON::> User() STATE::>loggedOut
+[User]AUTOMATON::> User() STATE::>loggedOut
+Cannot create Alerts while logged out
+[User]MOVED ON METHODCALL: void main.WebsiteAPI.createAlert() TO STATE::> !!!SYSTEM REACHED BAD STATE!!! illegalCreate 
 aspects._asp_RuntimeVerification0.ajc$before$aspects__asp_RuntimeVerification0$3$2a28a79(_asp_RuntimeVerification0.aj:32)
 main.WebsiteAPI.getEventType(WebsiteAPI.java:125)
-main.MyTask.run(Runner.java:14)
+main.MyTask.run(Runner.java:10)
 java.util.TimerThread.mainLoop(Timer.java:555)
 java.util.TimerThread.run(Timer.java:505) 
-[User]AUTOMATON::> User() STATE::>overflow
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.deleteAlerts() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.createAlert() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.deleteAlerts() TO STATE::> normal
-[User]AUTOMATON::> User() STATE::>normal
-[User]MOVED ON METHODCALL: void main.WebsiteAPI.logout() TO STATE::> start
+[User]AUTOMATON::> User() STATE::>illegalCreate
+[User]AUTOMATON::> User() STATE::>illegalCreate
+Cannot delete alerts while logged out
+[User]MOVED ON METHODCALL: void main.WebsiteAPI.deleteAlerts() TO STATE::> !!!SYSTEM REACHED BAD STATE!!! illegalDelete 
+aspects._asp_RuntimeVerification0.ajc$before$aspects__asp_RuntimeVerification0$5$2707451f(_asp_RuntimeVerification0.aj:50)
+main.WebsiteAPI.getEventType(WebsiteAPI.java:126)
+main.MyTask.run(Runner.java:10)
+java.util.TimerThread.mainLoop(Timer.java:555)
+java.util.TimerThread.run(Timer.java:505) 
+[User]AUTOMATON::> User() STATE::>illegalDelete
+Recovered to normal state
+[User]MOVED ON METHODCALL: void main.WebsiteAPI.goodLogin() TO STATE::> loggedIn
+[User]AUTOMATON::> User() STATE::>loggedIn
+[User]MOVED ON METHODCALL: void main.WebsiteAPI.viewAlerts() TO STATE::> loggedIn

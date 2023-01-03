@@ -28,27 +28,27 @@ GLOBAL{
                     illegalDelete
                 }
                 NORMAL{
-                	normal
+                	loggedIn
                 }
                 STARTING{
-                    start
+                    loggedOut
                 }
             }
 
             TRANSITIONS{
        
-            	normal->normal [createAlert\numOfAlerts < 5\numOfAlerts++;]
-            	normal->normal [deleteAlerts\numOfAlerts > 0\numOfAlerts=0;]
-            	normal->badDelete [deleteAlerts\numOfAlerts == 0\]
-            	normal->overflow [createAlert\numOfAlerts >= 5\numOfAlerts++;]
-            	overflow->normal [deleteAlerts\\numOfAlerts = 0;]
-            	start->illegalCreate [createAlert\\numOfAlerts++;]
-            	start->illegalDelete [deleteAlerts\\numOfAlerts = 0;]
-            	illegalCreate->illegalDelete [deleteAlerts\\numOfAlerts=0;]
-            	illegalDelete->normal [goodLogin\\]
-            	start->normal [goodLogin\\]
-            	normal->normal [viewAlerts\\]
-            	normal->start [logout\\]
+            	loggedIn->loggedIn [createAlert\numOfAlerts < 5\numOfAlerts++;]
+            	loggedIn->loggedIn [deleteAlerts\numOfAlerts > 0\numOfAlerts=0;]
+            	loggedIn->badDelete [deleteAlerts\numOfAlerts == 0\System.out.println("Nothing to Delete");]
+            	loggedIn->overflow [createAlert\numOfAlerts >= 5\numOfAlerts++;System.out.println("Overflow of Alerts");]
+            	overflow->loggedIn [deleteAlerts\\numOfAlerts = 0;System.out.println("Recovered to normal state");]
+            	loggedOut->illegalCreate [createAlert\\numOfAlerts++;System.out.println("Cannot create Alerts while logged out");]
+            	loggedOut->illegalDelete [deleteAlerts\\numOfAlerts = 0;System.out.println("Cannot delete alerts while logged out");]
+            	illegalCreate->illegalDelete [deleteAlerts\\numOfAlerts=0;System.out.println("Cannot delete alerts while logged out");]
+            	illegalDelete->loggedIn [goodLogin\\System.out.println("Recovered to normal state");]
+            	loggedOut->loggedIn [goodLogin\\]
+            	loggedIn->loggedIn [viewAlerts\\]
+            	loggedIn->loggedOut [logout\\]
 
             }
         }

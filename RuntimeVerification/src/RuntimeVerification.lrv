@@ -22,7 +22,7 @@ GLOBAL{
             STATES{
             	
                 BAD{
-                    tooMany
+                    overflow
                     badDelete
                     illegalCreate
                     illegalDelete
@@ -37,11 +37,11 @@ GLOBAL{
 
             TRANSITIONS{
        
-            	normal->normal [createAlert\numOfAlerts < 6\numOfAlerts++;]
+            	normal->normal [createAlert\numOfAlerts < 5\numOfAlerts++;]
             	normal->normal [deleteAlerts\numOfAlerts > 0\numOfAlerts=0;]
             	normal->badDelete [deleteAlerts\numOfAlerts == 0\]
-            	normal->tooMany [createAlert\numOfAlerts == 5\numOfAlerts++;]
-            	tooMany->normal [deleteAlerts\\numOfAlerts = 0;]
+            	normal->overflow [createAlert\numOfAlerts >= 5\numOfAlerts++;]
+            	overflow->normal [deleteAlerts\\numOfAlerts = 0;]
             	start->illegalCreate [createAlert\\numOfAlerts++;]
             	start->illegalDelete [deleteAlerts\\numOfAlerts = 0;]
             	illegalCreate->illegalDelete [deleteAlerts\\numOfAlerts=0;]
@@ -49,13 +49,6 @@ GLOBAL{
             	start->normal [goodLogin\\]
             	normal->normal [viewAlerts\\]
             	normal->start [logout\\]
-%%                tooMany->tooMany [addUser\\noOfUsers++;System.out.println("Too many users already");]
-%%                tooMany->tooMany [deleteUser\noOfUsers > 6\noOfUsers--;]
-%%                tooMany->start [deleteUser\noOfUsers == 6\noOfUsers--;]
-%%                start->badDelete [deleteUser\noOfUsers == 0\System.out.println("BAD State!!!");]
-%%                start->tooMany [addUser\noOfUsers == 5\noOfUsers++;]
-%%                start->start [addUser\\noOfUsers++;]
-%%                start->start [deleteUser\\noOfUsers--;]
 
             }
         }

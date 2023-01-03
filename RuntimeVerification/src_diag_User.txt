@@ -1,19 +1,19 @@
 digraph _logic_User {
 rankdir=LR;
 node [shape = circle]; normal start;
-node [shape = octagon]; tooMany badDelete illegalCreate illegalDelete;
+node [shape = octagon]; overflow badDelete illegalCreate illegalDelete;
 node [shape = point]; _s_s;
 _s_s -> start;
-normal -> normal [ label = "(1) createAlert\\numOfAlerts < 6 \\numOfAlerts ++ ; "];
+normal -> normal [ label = "(1) createAlert\\numOfAlerts < 5 \\numOfAlerts ++ ; "];
 normal -> normal [ label = "(2) deleteAlerts\\numOfAlerts > 0 \\numOfAlerts = 0 ; "];
 normal -> badDelete [ label = "(3) deleteAlerts\\numOfAlerts == 0 "];
-normal -> tooMany [ label = "(4) createAlert\\numOfAlerts == 5 \\numOfAlerts ++ ; "];
+normal -> overflow [ label = "(4) createAlert\\numOfAlerts >= 5 \\numOfAlerts ++ ; "];
 normal -> normal [ label = "(5) viewAlerts"];
 normal -> start [ label = "(6) logout"];
+overflow -> normal [ label = "(1) deleteAlerts\\\\numOfAlerts = 0 ; "];
 start -> illegalCreate [ label = "(1) createAlert\\\\numOfAlerts ++ ; "];
 start -> illegalDelete [ label = "(2) deleteAlerts\\\\numOfAlerts = 0 ; "];
 start -> normal [ label = "(3) goodLogin"];
 illegalCreate -> illegalDelete [ label = "(1) deleteAlerts\\\\numOfAlerts = 0 ; "];
 illegalDelete -> normal [ label = "(1) goodLogin"];
-tooMany -> normal [ label = "(1) deleteAlerts\\\\numOfAlerts = 0 ; "];
 }

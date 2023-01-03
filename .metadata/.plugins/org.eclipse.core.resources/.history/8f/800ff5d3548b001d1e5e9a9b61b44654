@@ -37,10 +37,10 @@ GLOBAL{
 
             TRANSITIONS{
        
-            	normal->normal [createAlert\numOfAlerts < 5\numOfAlerts++;]
+            	normal->normal [createAlert\numOfAlerts < 6\numOfAlerts++;]
             	normal->normal [deleteAlerts\numOfAlerts > 0\numOfAlerts=0;]
             	normal->badDelete [deleteAlerts\numOfAlerts == 0\]
-            	normal->overflow [createAlert\numOfAlerts >= 5\numOfAlerts++;]
+            	normal->overflow [createAlert\numOfAlerts == 5\numOfAlerts++;]
             	overflow->normal [deleteAlerts\\numOfAlerts = 0;]
             	start->illegalCreate [createAlert\\numOfAlerts++;]
             	start->illegalDelete [deleteAlerts\\numOfAlerts = 0;]

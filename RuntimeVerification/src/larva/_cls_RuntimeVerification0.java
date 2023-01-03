@@ -84,7 +84,7 @@ else if (no_automata < 0)
 }catch(Exception ex){ex.printStackTrace();}
 }
 
-int _state_id_User = 43;
+int _state_id_User = 61;
 
 public void _performLogic_User(String _info, int... _event) {
 
@@ -92,85 +92,85 @@ _cls_RuntimeVerification0.pw.println("[User]AUTOMATON::> User("+") STATE::>"+ _s
 _cls_RuntimeVerification0.pw.flush();
 
 if (0==1){}
-else if (_state_id_User==42){
+else if (_state_id_User==60){
 		if (1==0){}
-		else if ((_occurredEvent(_event,96/*createAlert*/)) && (numOfAlerts <6 )){
+		else if ((_occurredEvent(_event,126/*createAlert*/)) && (numOfAlerts <5 )){
 		numOfAlerts ++;
 
-		_state_id_User = 42;//moving to state normal
+		_state_id_User = 60;//moving to state normal
 		_goto_User(_info);
 		}
-		else if ((_occurredEvent(_event,98/*deleteAlerts*/)) && (numOfAlerts >0 )){
+		else if ((_occurredEvent(_event,128/*deleteAlerts*/)) && (numOfAlerts >0 )){
 		numOfAlerts =0 ;
 
-		_state_id_User = 42;//moving to state normal
+		_state_id_User = 60;//moving to state normal
 		_goto_User(_info);
 		}
-		else if ((_occurredEvent(_event,98/*deleteAlerts*/)) && (numOfAlerts ==0 )){
+		else if ((_occurredEvent(_event,128/*deleteAlerts*/)) && (numOfAlerts ==0 )){
 		
-		_state_id_User = 39;//moving to state badDelete
+		_state_id_User = 57;//moving to state badDelete
 		_goto_User(_info);
 		}
-		else if ((_occurredEvent(_event,96/*createAlert*/)) && (numOfAlerts ==5 )){
+		else if ((_occurredEvent(_event,126/*createAlert*/)) && (numOfAlerts >=5 )){
 		numOfAlerts ++;
 
-		_state_id_User = 38;//moving to state tooMany
+		_state_id_User = 56;//moving to state overflow
 		_goto_User(_info);
 		}
-		else if ((_occurredEvent(_event,94/*viewAlerts*/))){
+		else if ((_occurredEvent(_event,124/*viewAlerts*/))){
 		
-		_state_id_User = 42;//moving to state normal
+		_state_id_User = 60;//moving to state normal
 		_goto_User(_info);
 		}
-		else if ((_occurredEvent(_event,100/*logout*/))){
+		else if ((_occurredEvent(_event,130/*logout*/))){
 		
-		_state_id_User = 43;//moving to state start
+		_state_id_User = 61;//moving to state start
 		_goto_User(_info);
 		}
 }
-else if (_state_id_User==43){
+else if (_state_id_User==56){
 		if (1==0){}
-		else if ((_occurredEvent(_event,96/*createAlert*/))){
+		else if ((_occurredEvent(_event,128/*deleteAlerts*/))){
+		numOfAlerts =0 ;
+
+		_state_id_User = 60;//moving to state normal
+		_goto_User(_info);
+		}
+}
+else if (_state_id_User==61){
+		if (1==0){}
+		else if ((_occurredEvent(_event,126/*createAlert*/))){
 		numOfAlerts ++;
 
-		_state_id_User = 40;//moving to state illegalCreate
+		_state_id_User = 58;//moving to state illegalCreate
 		_goto_User(_info);
 		}
-		else if ((_occurredEvent(_event,98/*deleteAlerts*/))){
+		else if ((_occurredEvent(_event,128/*deleteAlerts*/))){
 		numOfAlerts =0 ;
 
-		_state_id_User = 41;//moving to state illegalDelete
+		_state_id_User = 59;//moving to state illegalDelete
 		_goto_User(_info);
 		}
-		else if ((_occurredEvent(_event,92/*goodLogin*/))){
+		else if ((_occurredEvent(_event,122/*goodLogin*/))){
 		
-		_state_id_User = 42;//moving to state normal
+		_state_id_User = 60;//moving to state normal
 		_goto_User(_info);
 		}
 }
-else if (_state_id_User==40){
+else if (_state_id_User==58){
 		if (1==0){}
-		else if ((_occurredEvent(_event,98/*deleteAlerts*/))){
+		else if ((_occurredEvent(_event,128/*deleteAlerts*/))){
 		numOfAlerts =0 ;
 
-		_state_id_User = 41;//moving to state illegalDelete
+		_state_id_User = 59;//moving to state illegalDelete
 		_goto_User(_info);
 		}
 }
-else if (_state_id_User==41){
+else if (_state_id_User==59){
 		if (1==0){}
-		else if ((_occurredEvent(_event,92/*goodLogin*/))){
+		else if ((_occurredEvent(_event,122/*goodLogin*/))){
 		
-		_state_id_User = 42;//moving to state normal
-		_goto_User(_info);
-		}
-}
-else if (_state_id_User==38){
-		if (1==0){}
-		else if ((_occurredEvent(_event,98/*deleteAlerts*/))){
-		numOfAlerts =0 ;
-
-		_state_id_User = 42;//moving to state normal
+		_state_id_User = 60;//moving to state normal
 		_goto_User(_info);
 		}
 }
@@ -183,12 +183,12 @@ _cls_RuntimeVerification0.pw.flush();
 
 public String _string_User(int _state_id, int _mode){
 switch(_state_id){
-case 42: if (_mode == 0) return "normal"; else return "normal";
-case 40: if (_mode == 0) return "illegalCreate"; else return "!!!SYSTEM REACHED BAD STATE!!! illegalCreate "+new _BadStateExceptionRuntimeVerification().toString()+" ";
-case 43: if (_mode == 0) return "start"; else return "start";
-case 41: if (_mode == 0) return "illegalDelete"; else return "!!!SYSTEM REACHED BAD STATE!!! illegalDelete "+new _BadStateExceptionRuntimeVerification().toString()+" ";
-case 38: if (_mode == 0) return "tooMany"; else return "!!!SYSTEM REACHED BAD STATE!!! tooMany "+new _BadStateExceptionRuntimeVerification().toString()+" ";
-case 39: if (_mode == 0) return "badDelete"; else return "!!!SYSTEM REACHED BAD STATE!!! badDelete "+new _BadStateExceptionRuntimeVerification().toString()+" ";
+case 60: if (_mode == 0) return "normal"; else return "normal";
+case 56: if (_mode == 0) return "overflow"; else return "!!!SYSTEM REACHED BAD STATE!!! overflow "+new _BadStateExceptionRuntimeVerification().toString()+" ";
+case 58: if (_mode == 0) return "illegalCreate"; else return "!!!SYSTEM REACHED BAD STATE!!! illegalCreate "+new _BadStateExceptionRuntimeVerification().toString()+" ";
+case 61: if (_mode == 0) return "start"; else return "start";
+case 59: if (_mode == 0) return "illegalDelete"; else return "!!!SYSTEM REACHED BAD STATE!!! illegalDelete "+new _BadStateExceptionRuntimeVerification().toString()+" ";
+case 57: if (_mode == 0) return "badDelete"; else return "!!!SYSTEM REACHED BAD STATE!!! badDelete "+new _BadStateExceptionRuntimeVerification().toString()+" ";
 default: return "!!!SYSTEM REACHED AN UNKNOWN STATE!!!";
 }
 }
